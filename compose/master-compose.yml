@@ -75,10 +75,10 @@ services:
         CHAIN_RPC_PASSWORD: "trialchain1"
         CHAIN_RPC_HOST: "multichain-master"
         CHAIN_RPC_PORT: "8571"
-        ETH_KEY: "DB2AE78A856B9AB99C334988ACF8C55C7DC185CB212D1A02F3ED2D93AB73C675"  # 私钥
-        ETH_ACCOUNT: "0xda52C681e8bB7C1cc9A58Ba5336bF53017a30A82"   # 公钥，或者说是账户地址
+        ETH_KEY: "???"  # 私钥
+        ETH_ACCOUNT: "0x00"   # 公钥，或者说是账户地址
         GETH_URL: "http://trialchain-geth:8545"                     # geth的rpc地址
-        ETHIO_TOKEN: "9TUVPEC7K281BYG38S5DIZ5MGDVPCZIENF"           # ethio的token，需要去网站申请，用于查看以太坊数据
+        ETHIO_TOKEN: "????"           # ethio的token，需要去网站申请，用于查看以太坊数据
         BCYPHER_TOKEN: "sometoken"                                  # 另外一个查看以太坊信息的网站
         GETH_MODE: "light" # One of "fast", "light", "dev"          # geth节点的同步方式
       networks:
