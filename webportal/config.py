@@ -18,8 +18,8 @@ class Config(object):
 
     # 主要将本地的multichain同步到以太坊公链相关的设置
     ETH_KEY = os.environ.get('ETH_KEY') or 'no-eth-key'
-    ETH_ACCOUNT = os.environ.get('ETH_ACCOUNT') or '0xda52C681e8bB7C1cc9A58Ba5336bF53017a30A82'
+    ETH_ACCOUNT = os.environ.get('ETH_ACCOUNT') or '0x00'
     GETH_URL = os.environ.get('GETH_URL') or 'no-geth-url'
-    ETHIO_TOKEN = os.environ.get('ETHIO_TOKEN') or '9TUVPEC7K281BYG38S5DIZ5MGDVPCZIENF'
+    ETHIO_TOKEN = os.environ.get('ETHIO_TOKEN') or '??????'
     BCYPHER_TOKEN = os.environ.get('BCYPHER_TOKEN') or 'no-bcypher-token'
     GETH_MODE = os.environ.get('GETH_MODE') or 'fast'
