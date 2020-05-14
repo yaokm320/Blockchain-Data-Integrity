@@ -1,0 +1,100 @@
+version: '3'
+services:
+    # multichain的主节点，这是一个私有链，在本地提供区块链服务
+    multichain-master:
+      build: ../multichain
+      container_name: multichain-master
+      ports:
+        - "8570:8570"
+        - "8571:8571"
+      environment:
+        - CHAIN_NAME=trialchain
+        - CHAIN_RPC_IP=10.5.0.150
+        - CHAIN_RPC_NB_IP=10.5.0.152
+        - CHAIN_RPC_USER=rpcuser
+        - CHAIN_RPC_PASSWORD=trialchain1
+      networks:
+        vpcbr:
+          ipv4_address: 10.5.0.154
+
+    # trialchain-geth是以太坊的客户端，用于将私链数据同步到公链
+    trialchain-geth:
+      build: ../geth
+      container_name: trialchain-geth
+      ports:
+        - "8545:8545"
+        - "30303:30303/tcp"
+        - "30303:30303/udp"
+      environment:
+        - GETH_HOST=10.5.0.151
+        - GETH_RPC_PORT=8545
+      volumes:
+        - geth-data:/root/.ethereum
+      networks:
+        vpcbr:
+          ipv4_address: 10.5.0.151
+
+    # multichain-notebook配置信息
+    multichain-notebook:
+      build: ../jupyter
+      container_name: multichain-notebook
+      ports:
+        - "8888:8888"
+      networks:
+        vpcbr:
+          ipv4_address: 10.5.0.152
+
+    # 数据库容器
+    db:
+      image: postgres
+      container_name: db
+      ports:
+        - "5432:5432"
+      volumes:
+        - "postgres-data:/var/lib/postgresql/data"
+      environment:
+        POSTGRES_USER: "webportal"
+        POSTGRES_PASSWORD: "testing"
+        POSTGRES_DB: "admin"
+      networks:
+        vpcbr:
+          ipv4_address: 10.5.0.153
+
+    # web网站配置
+    webportal:
+      build: ../webportal
+      container_name: webportal
+      ports:
+        - "5000:5000"
+      links:
+        - db
+      environment:
+        DATABASE_URL: "postgres://webportal:testing@10.5.0.153:5432/admin"   # 数据库url
+        CHAIN_NAME: "trialchain"
+        CHAIN_RPC_USER: "rpcuser"
+        CHAIN_RPC_PASSWORD: "trialchain1"
+        CHAIN_RPC_HOST: "multichain-master"
+        CHAIN_RPC_PORT: "8571"
+        ETH_KEY: "DB2AE78A856B9AB99C334988ACF8C55C7DC185CB212D1A02F3ED2D93AB73C675"  # 私钥
+        ETH_ACCOUNT: "0xda52C681e8bB7C1cc9A58Ba5336bF53017a30A82"   # 公钥，或者说是账户地址
+        GETH_URL: "http://trialchain-geth:8545"                     # geth的rpc地址
+        ETHIO_TOKEN: "9TUVPEC7K281BYG38S5DIZ5MGDVPCZIENF"           # ethio的token，需要去网站申请，用于查看以太坊数据
+        BCYPHER_TOKEN: "sometoken"                                  # 另外一个查看以太坊信息的网站
+        GETH_MODE: "light" # One of "fast", "light", "dev"          # geth节点的同步方式
+      networks:
+        vpcbr:
+          ipv4_address: 10.5.0.150
+
+volumes:
+  geth-data:
+  postgres-data:
+
+# 为docker-compose设置虚拟网段，方面docker容器进行通信
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/24
+
+

@@ -1,0 +1,1 @@
+是multichain的浏览器，是人家公司提供的。和multichain配套使用。提供了一个web的图形化界面。
