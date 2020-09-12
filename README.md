@@ -1,4 +1,4 @@
-# trialchain
+# TrialChain
 启动过程:
 
 1. 修改配置文件信息
