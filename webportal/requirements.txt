@@ -42,7 +42,7 @@ pyethash==0.1.27
 pysha3==1.0.2
 python-dateutil==2.6.1
 python-editor==1.0.3
-python-engineio==2.0.2
+python-engineio==3.8.2.post1
 python-socketio==1.8.4
 PyYAML==3.12
 repoze.lru==0.7
