@@ -46,7 +46,7 @@ python-engineio==2.0.2
 python-socketio==1.8.4
 PyYAML==3.12
 repoze.lru==0.7
-requests==2.18.4
+requests==2.20.0
 rlp==0.6.0
 Savoir==1.0.6
 scrypt==0.8.6
